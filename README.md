@@ -23,6 +23,3 @@ Pynthesizer uses a fast, dropdown-based preset system.
 * **Sharing:** You can easily back up, share, or trade your sounds by copying the `.json` files out of the `presets/` folder.
 * **Manual Editing:** Want to build a preset by hand? Open `preset_template.json` in any text editor to see a fully commented breakdown of every parameter.
 
-## Modifying the Synth (For Developers)
-
-Pynthesizer is built in Python using `sounddevice`, `numpy`, and `tkinter`. If you are interested in diving into the source code to add your own oscillators, map new MIDI CC controls, or add new DSP effects, please read the included `HACKING.md` guide for a complete architectural overview and code examples.
