@@ -10,7 +10,7 @@ Pynthesizer is a custom polyphonic virtual instrument featuring bandlimited osci
 Pynthesizer requires no installation. It runs completely standalone.
 
 1. Extract the entire `.zip` folder to your computer.
-2. Double-click `pynthesizer.exe` to launch the synthesizer.
+2. Double-click to launch the synthesizer. On MacOS, you may need to confirm permissions and/or your trust of me, the publisher.
 3. In the top-left corner of the window, select your MIDI keyboard or controller from the **MIDI In** dropdown menu.
 4. Turn up your volume and play!
 
