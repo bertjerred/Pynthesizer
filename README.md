@@ -1,6 +1,8 @@
 # Pynthesizer
 **v1.0.0** | **© 2026 Bert Jerred Music Publishing**
 
+![Pynthesizer plugin screenshot](https://github.com/bertjerred/Pynthesizer/blob/main/Pynthesizer-screenshot.png)
+
 Pynthesizer is a custom polyphonic virtual instrument featuring bandlimited oscillators, state-variable filters, and dynamic pedalboard effects. It is designed to be lightweight, standalone, and easily customizable.
 
 ## Getting Started
