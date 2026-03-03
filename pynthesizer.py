@@ -13,6 +13,7 @@ from pedalboard import Pedalboard, Reverb
 import mido
 import mido.backends.rtmidi # Explicitly import backend
 
+import queue
 # --- CONFIGURATION ---
 SAMPLE_RATE = 44100
 BLOCK_SIZE = 256 
@@ -291,6 +292,7 @@ class SynthGui:
         self.midi_out_port = None
         self.midi_thread_running = False
         self.presets_dir = self._get_presets_path()
+        self.midi_queue = queue.Queue()
 
         self.root.title("Pynthesizer")
         self.root.geometry("960x560")
@@ -479,6 +481,7 @@ class SynthGui:
         self.midi_thread = threading.Thread(target=self._midi_worker, daemon=True)
         self.midi_thread.start()
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.root.after(50, self._process_midi_queue)
 
     def _update_cutoff_from_scale(self, slider_val):
         """Converts linear slider position (0-100) to a logarithmic frequency."""
@@ -626,15 +629,27 @@ class SynthGui:
                         if msg.control == 74:
                             normalized = msg.value / 127.0
                             cutoff_val = 80.0 * (200.0 ** normalized) # Exponential curve for MIDI CC
-                            # Safely update GUI from this thread
-                            self.root.after(0, lambda val=cutoff_val: self._set_cutoff_value(val))
+                            self.midi_queue.put(('cutoff', cutoff_val))
                         elif msg.control == 71:
                             normalized = msg.value / 127.0
                             new_res_val = 0.1 + (normalized * 0.8)
-                            # Safely update GUI from this thread
-                            self.root.after(0, lambda val=new_res_val: self.scale_res.set(val))
+                            self.midi_queue.put(('resonance', new_res_val))
             
             time.sleep(0.001) # Small sleep to prevent the thread from using 100% CPU
+
+    def _process_midi_queue(self):
+        """Processes MIDI messages from the queue on the main GUI thread."""
+        try:
+            while True:
+                message = self.midi_queue.get_nowait()
+                control, value = message
+                if control == 'cutoff':
+                    self._set_cutoff_value(value)
+                elif control == 'resonance':
+                    self.scale_res.set(value)
+        except queue.Empty:
+            pass # The queue is empty, do nothing.
+        self.root.after(50, self._process_midi_queue)
 
     def set_filter_mode(self):
         self.synth.filter_mode = self.filter_mode_var.get()
