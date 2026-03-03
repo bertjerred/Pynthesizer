@@ -18,7 +18,7 @@ Pynthesizer requires no installation. It runs completely standalone.
 
 Pynthesizer uses a fast, dropdown-based preset system. 
 
-* **Where are they?** All patches are saved as lightweight `.json` files in the `presets/` folder located right next to your `pynthesizer.exe` file.
+* **Where are they?** All patches are saved as lightweight `.json` files in an automatically-generated `presets/` folder, right next to your Pynthesizer app.
 * **Saving:** Type a name into the "New Preset" box in the top bar and click **SAVE**. It will instantly appear in the dropdown.
 * **Sharing:** You can easily back up, share, or trade your sounds by copying the `.json` files out of the `presets/` folder.
 * **Manual Editing:** Want to build a preset by hand? Open `preset_template.json` in any text editor to see a fully commented breakdown of every parameter.
